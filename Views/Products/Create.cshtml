@@ -10,7 +10,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form style="color:black" asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Name" class="control-label" style="color:black ; font:bold "></label>
@@ -20,7 +20,7 @@
             <div class="form-group">
                 <label asp-for="Manifaction" class="control-label"></label>
                 <input asp-for="Manifaction" class="form-control" , style="border:ridge" />
-                <span asp-validation-for="Manifaction" class="text-danger " style="color-interpolation:"></span>
+                <span asp-validation-for="Manifaction" class="text-danger " style="color-interpolation:auto"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>
