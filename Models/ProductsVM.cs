@@ -23,7 +23,6 @@ namespace ManicureAndPedicureSalon.Models
 
         [Column(TypeName = "decimal(10,2)")]
         public decimal Price { get; set; }
-        //[Required(ErrorMessage = "This field is required")]
         public DateTime DateRegister { get; set; }
       
 

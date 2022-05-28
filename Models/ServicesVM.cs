@@ -26,7 +26,6 @@ namespace ManicureAndPedicureSalon.Models
 
         [Column(TypeName = "decimal(10,2)")]
         public decimal Price { get; set; }
-      
         public DateTime DateRegister { get; set; }
         
     }
