@@ -13,7 +13,7 @@ a {
 }
 
 .btn-primary {
-  color: lightpink;
+  color: black;
   background-color: peachpuff;
   border-color: black;
 }
@@ -77,9 +77,10 @@ body {
     width: 100%;
     white-space: nowrap;
     line-height: 60px; /* Vertically center the text there */
-    background-color: #a46497;
+    background-color:darkred;
 }
 .icon-calendar::before {
     content:icon
 }
+
 
