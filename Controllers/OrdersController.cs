@@ -130,14 +130,22 @@ namespace ManicureAndPedicureSalon.Controllers
             {
                 return NotFound();
             }
+            OrdersVM model = new OrdersVM();
+            model.Products = _context.Products.Select(x => new SelectListItem
+            {
+                Text = x.Name,
+                Value = x.Id.ToString(),
+                Selected = (x.Id == model.ProductId)
+            }
+            ).ToList();
 
             var order = await _context.Orders.FindAsync(id);
             if (order == null)
             {
                 return NotFound();
             }
-            ViewData["ProductId"] = new SelectList(_context.Products, "Id", "Id", order.ProductId);
-            return View(order);
+           
+            return View(model);
         }
 
         // POST: Orders/Edit/5
@@ -145,35 +153,48 @@ namespace ManicureAndPedicureSalon.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,ProductId,ClientId,Quantity,OrderedOn")] Order order)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,ProductId,ClientId,Quantity,OrderedOn")] OrdersVM order)
         {
+            order.OrderedOn = DateTime.Now;
             if (id != order.Id)
             {
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                try
-                {
-                    _context.Update(order);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!OrderExists(order.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
+                return View(order);
             }
-            ViewData["ProductId"] = new SelectList(_context.Products, "Id", "Id", order.ProductId);
-            return View(order);
+            Order modelTooDB = new Order
+            {
+                ProductId = order.ProductId,
+                ClientId = _userManager.GetUserId(User),
+                Quantity = order.Quantity,
+                OrderedOn = DateTime.Now
+            };
+            
+         
+            try
+            {
+                _context.Update(modelTooDB);//(order);
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!OrderExists(modelTooDB.Id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+             return RedirectToAction(nameof(Index));
+           
+            
+            
+            
         }
 
         // GET: Orders/Delete/5

@@ -16,6 +16,7 @@ namespace ManicureAndPedicureSalon.Data
         public int EmployerId { get; set; }
         
         public string Images { get; set;}
+
         [Column(TypeName = "decimal(10,2)")]
         public decimal Price { get; set; }
         public DateTime DateRegister { get; set; }

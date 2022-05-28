@@ -6,9 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ManicureAndPedicureSalon.Data;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ManicureAndPedicureSalon.Controllers
 {
+    [Authorize]
     public class EmployersController : Controller
     {
         private readonly ApplicationDbContext _context;

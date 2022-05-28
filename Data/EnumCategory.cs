@@ -5,5 +5,5 @@ using System.Threading.Tasks;
 
 namespace ManicureAndPedicureSalon.Data
 {
-    public enum TypeCategory { Manicure, Pedicure }
+    public enum TypeCategory { Manicure, Pedicure, Support, NailArt }
 }

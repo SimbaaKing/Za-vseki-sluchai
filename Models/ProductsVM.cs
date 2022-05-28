@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -16,10 +17,13 @@ namespace ManicureAndPedicureSalon.Models
         [Required(ErrorMessage = "This field is required")]
         public string Description { get; set; }
         [Required(ErrorMessage = "This field is required")]
+
         public string Images { get; set; }
         [Required(ErrorMessage = "This field is required")]
+
+        [Column(TypeName = "decimal(10,2)")]
         public decimal Price { get; set; }
-        [Required(ErrorMessage = "This field is required")]
+        //[Required(ErrorMessage = "This field is required")]
         public DateTime DateRegister { get; set; }
       
 

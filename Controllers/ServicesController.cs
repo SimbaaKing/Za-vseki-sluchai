@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ManicureAndPedicureSalon.Data;
 using ManicureAndPedicureSalon.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ManicureAndPedicureSalon.Controllers
 {
+    [Authorize]
     public class ServicesController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -46,6 +48,7 @@ namespace ManicureAndPedicureSalon.Controllers
         }
 
         // GET: Services/Create
+       // [Authorize(Roles = "User, Admin")]
         public IActionResult Create()
         {
             ServicesVM model = new ServicesVM();
@@ -64,24 +67,34 @@ namespace ManicureAndPedicureSalon.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ServiceId,Name,Category,Description,EmployerId,Images,Price,DateRegister")] Service service)
+        public async Task<IActionResult> Create([Bind("ServiceId,Name,Category,Description,EmployerId,Images,Price,DateRegister")] ServicesVM service)
         {
-            if (ModelState.IsValid)
+            service.DateRegister = DateTime.Now;
+            if (!ModelState.IsValid)
             {
-                _context.Add(service);
+                ServicesVM model = new ServicesVM();
+                model.Employers = _context.Employers.Select(x => new SelectListItem
+                {
+                    Value = x.EmployerId.ToString(),
+                    Text = x.Name,
+                    Selected = x.EmployerId == model.EmployerId
+                }).ToList();
+                return View(model);
+            }
+            
+                Service modelToDb = new Service();
+                modelToDb.ServiceId = service.ServiceId;
+                modelToDb.Name = service.Name;
+                modelToDb.Price = service.Price;
+                modelToDb.Images = service.Images;
+                modelToDb.DateRegister = service.DateRegister;
+                modelToDb.Category = service.Category;
+                modelToDb.Description = service.Description;
+                modelToDb.EmployerId = service.EmployerId;
+
+                _context.Services.Add(modelToDb);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
-            }
-            ServicesVM model = new ServicesVM();
-            model.Employers = _context.Employers.Select(x => new SelectListItem
-            {
-                Value = x.EmployerId.ToString(),
-                Text = x.Name,
-                Selected = x.EmployerId == model.EmployerId
-            }).ToList();
-
-            //ViewData["EmployerId"] = new SelectList(_context.Employers, "EmployerId", "EmployerId", service.EmployerId);
-            return View(model);
         }
 
         // GET: Services/Edit/5
@@ -109,7 +122,6 @@ namespace ManicureAndPedicureSalon.Controllers
                 Selected = x.EmployerId == model.EmployerId
             }).ToList();
 
-            ViewData["EmployerId"] = new SelectList(_context.Employers, "EmployerId", "EmployerId", service.EmployerId);
             return View(model);
         }
 
@@ -118,23 +130,39 @@ namespace ManicureAndPedicureSalon.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ServiceId,Name,Category,Description,EmployerId,Images,Price,DateRegister")] Service service)
+        public async Task<IActionResult> Edit(int id, [Bind("ServiceId,Name,Category,Description,EmployerId,Images,Price,DateRegister")] ServicesVM service)
         {
+            service.DateRegister = DateTime.Now;
             if (id != service.ServiceId)
             {
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
+                return View(service);
+            }
+            Service modelToDb = new Service(); 
+                { 
+                     modelToDb.ServiceId = service.ServiceId;
+                     modelToDb.Name = service.Name;
+                     modelToDb.Price = service.Price;
+                     modelToDb.Images = service.Images;
+                     modelToDb.DateRegister = service.DateRegister;
+                     modelToDb.Category = service.Category;
+                     modelToDb.Description = service.Description;
+                     modelToDb.EmployerId = service.EmployerId;
+               
+                };
+            
                 try
                 {
-                    _context.Update(service);
+                    _context.Update(modelToDb);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ServiceExists(service.ServiceId))
+                    if (!ServiceExists(modelToDb.ServiceId))
                     {
                         return NotFound();
                     }
@@ -144,9 +172,7 @@ namespace ManicureAndPedicureSalon.Controllers
                     }
                 }
                 return RedirectToAction(nameof(Index));
-            }
-            ViewData["EmployerId"] = new SelectList(_context.Employers, "EmployerId", "EmployerId", service.EmployerId);
-            return View(service);
+            
         }
 
         // GET: Services/Delete/5

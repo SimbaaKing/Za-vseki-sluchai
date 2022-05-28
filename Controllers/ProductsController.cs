@@ -6,9 +6,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ManicureAndPedicureSalon.Data;
+using Microsoft.AspNetCore.Authorization;
+using ManicureAndPedicureSalon.Models;
 
 namespace ManicureAndPedicureSalon.Controllers
 {
+    [Authorize]
     public class ProductsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -46,6 +49,7 @@ namespace ManicureAndPedicureSalon.Controllers
         // GET: Products/Create
         public IActionResult Create()
         {
+
             return View();
         }
 
@@ -63,6 +67,7 @@ namespace ManicureAndPedicureSalon.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            
             return View(product);
         }
 

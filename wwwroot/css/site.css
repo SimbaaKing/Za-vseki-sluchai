@@ -9,19 +9,19 @@ a.navbar-brand {
 
 /* Provide sufficient contrast against white background */
 a {
-  color: #0366d6;
+  color: black;
 }
 
 .btn-primary {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+  color: lightpink;
+  background-color: peachpuff;
+  border-color: black;
 }
 
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
   color: #fff;
   background-color: #1b6ec2;
-  border-color: #1861ac;
+  border-color: black;
 }
 
 /* Sticky footer styles
@@ -31,7 +31,8 @@ html {
 }
 @media (min-width: 768px) {
   html {
-    font-size: 16px;
+    font-size: 13px;
+    background-color:peachpuff;
   }
 }
 
@@ -56,16 +57,29 @@ button.accept-policy {
 html {
   position: relative;
   min-height: 100%;
+  background-color:peachpuff;
 }
 
 body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    display: block;
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
+    font-style: italic;
+    background-color: peachpuff;
+    color: peachpuff;
 }
 .footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  white-space: nowrap;
-  line-height: 60px; /* Vertically center the text there */
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    white-space: nowrap;
+    line-height: 60px; /* Vertically center the text there */
+    background-color: #a46497;
 }
+.icon-calendar::before {
+    content:icon
+}
+
