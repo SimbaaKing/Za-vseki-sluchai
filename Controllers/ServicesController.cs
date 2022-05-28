@@ -133,6 +133,7 @@ namespace ManicureAndPedicureSalon.Controllers
         public async Task<IActionResult> Edit(int id, [Bind("ServiceId,Name,Category,Description,EmployerId,Images,Price,DateRegister")] ServicesVM service)
         {
             service.DateRegister = DateTime.Now;
+            //Service modelToDb = await _context.Services.FindAsync(Service);
             if (id != service.ServiceId)
             {
                 return NotFound();
@@ -144,7 +145,7 @@ namespace ManicureAndPedicureSalon.Controllers
             }
             Service modelToDb = new Service();
             {
-                modelToDb.ServiceId = service.ServiceId;
+                //modelToDb.ServiceId = service.ServiceId;
                 modelToDb.Name = service.Name;
                 modelToDb.Price = service.Price;
                 modelToDb.Images = service.Images;

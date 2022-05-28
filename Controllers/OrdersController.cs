@@ -156,6 +156,7 @@ namespace ManicureAndPedicureSalon.Controllers
         public async Task<IActionResult> Edit(int id, [Bind("Id,ProductId,ClientId,Quantity,OrderedOn")] OrdersVM order)
         {
             order.OrderedOn = DateTime.Now;
+            
             if (id != order.Id)
             {
                 return NotFound();
