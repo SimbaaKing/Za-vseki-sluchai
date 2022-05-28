@@ -58,7 +58,7 @@ namespace ManicureAndPedicureSalon.Controllers
                 Text = x.Name,
                 Selected = x.EmployerId == model.EmployerId
             }).ToList();
-            //ViewData["EmployerId"] = new SelectList(_context.Employers, "EmployerId", "EmployerId");
+
             return View(model);
         }
 
@@ -142,19 +142,17 @@ namespace ManicureAndPedicureSalon.Controllers
             {
                 return View(service);
             }
-            Service modelToDb = new Service(); 
-                { 
-                     modelToDb.ServiceId = service.ServiceId;
-                     modelToDb.Name = service.Name;
-                     modelToDb.Price = service.Price;
-                     modelToDb.Images = service.Images;
-                     modelToDb.DateRegister = service.DateRegister;
-                     modelToDb.Category = service.Category;
-                     modelToDb.Description = service.Description;
-                     modelToDb.EmployerId = service.EmployerId;
-               
-                };
-            
+            Service modelToDb = new Service();
+            {
+                modelToDb.ServiceId = service.ServiceId;
+                modelToDb.Name = service.Name;
+                modelToDb.Price = service.Price;
+                modelToDb.Images = service.Images;
+                modelToDb.DateRegister = service.DateRegister;
+                modelToDb.Category = service.Category;
+                modelToDb.Description = service.Description;
+                modelToDb.EmployerId = service.EmployerId;
+            }
                 try
                 {
                     _context.Update(modelToDb);
