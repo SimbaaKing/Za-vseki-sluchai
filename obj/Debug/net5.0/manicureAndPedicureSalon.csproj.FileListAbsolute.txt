@@ -185,3 +185,8 @@ C:\Users\Home\Documents\school\DZI\manicureAndPedicureSalon\manicureAndPedicureS
 C:\Users\Home\Documents\school\DZI\manicureAndPedicureSalon\manicureAndPedicureSalon\obj\Debug\net5.0\ManicureAndPedicureSalon.csprojAssemblyReference.cache
 C:\Users\Home\Documents\school\DZI\manicureAndPedicureSalon\manicureAndPedicureSalon\obj\Debug\net5.0\Razor\Views\Home\About.cshtml.g.cs
 C:\Users\Home\Documents\school\DZI\manicureAndPedicureSalon\manicureAndPedicureSalon\obj\Debug\net5.0\Razor\Views\Home\Contacts.cshtml.g.cs
+C:\Users\Home\Documents\school\DZI\manicureAndPedicureSalon\manicureAndPedicureSalon\obj\Debug\net5.0\Razor\Views\Appoitments\Create.cshtml.g.cs
+C:\Users\Home\Documents\school\DZI\manicureAndPedicureSalon\manicureAndPedicureSalon\obj\Debug\net5.0\Razor\Views\Appoitments\Delete.cshtml.g.cs
+C:\Users\Home\Documents\school\DZI\manicureAndPedicureSalon\manicureAndPedicureSalon\obj\Debug\net5.0\Razor\Views\Appoitments\Details.cshtml.g.cs
+C:\Users\Home\Documents\school\DZI\manicureAndPedicureSalon\manicureAndPedicureSalon\obj\Debug\net5.0\Razor\Views\Appoitments\Edit.cshtml.g.cs
+C:\Users\Home\Documents\school\DZI\manicureAndPedicureSalon\manicureAndPedicureSalon\obj\Debug\net5.0\Razor\Views\Appoitments\Index.cshtml.g.cs
