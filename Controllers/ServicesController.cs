@@ -148,25 +148,25 @@ namespace ManicureAndPedicureSalon.Controllers
             {
                 return View(service);
             }
-            Service modelToDb = new Service();
+            Service modelFromDb = new ();
             {
                 //modelToDb.ServiceId = service.ServiceId;
-                modelToDb.Name = service.Name;
-                modelToDb.Price = service.Price;
-                modelToDb.Images = service.Images;
-                modelToDb.DateRegister = service.DateRegister;
-                modelToDb.Category = service.Category;
-                modelToDb.Description = service.Description;
-                modelToDb.EmployerId = service.EmployerId;
+                modelFromDb.Name = service.Name;
+                modelFromDb.Price = service.Price;
+                modelFromDb.Images = service.Images;
+                modelFromDb.DateRegister = service.DateRegister;
+                modelFromDb.Category = service.Category;
+                modelFromDb.Description = service.Description;
+                modelFromDb.EmployerId = service.EmployerId;
             };
             try
             {
-                _context.Update(modelToDb);
+                _context.Update(modelFromDb);
                 await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                  if (!ServiceExists(modelToDb.ServiceId))
+                  if (!ServiceExists(modelFromDb.ServiceId))
                    {
                      return NotFound();
                    }
