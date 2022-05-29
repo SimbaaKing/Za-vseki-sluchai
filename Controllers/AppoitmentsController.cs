@@ -49,8 +49,17 @@ namespace ManicureAndPedicureSalon.Controllers
         // GET: Appoitments/Create
         public IActionResult Create()
         {
-            ViewData["ServiceId"] = new SelectList(_context.Services, "ServiceId", "ServiceId");
-            return View();
+            AppoitmentsVM model = new AppoitmentsVM();
+
+            model.Services = _context.Services.Select(x => new SelectListItem
+            {
+                Text = x.Name,
+                Value = x.ServiceId.ToString(),
+                Selected = (x.ServiceId == model.ServiceId)
+            }
+            ).ToList();
+            
+            return View(model);
         }
 
         // POST: Appoitments/Create
@@ -58,16 +67,33 @@ namespace ManicureAndPedicureSalon.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,ClientId,ServiceId,DateVisit,TimeVisit,Date")] Appoitment appoitment)
+        public async Task<IActionResult> Create([Bind("Id,ClientId,ServiceId,DateVisit,TimeVisit,Date")] AppoitmentsVM appoitment)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                _context.Add(appoitment);
+                AppoitmentsVM model = new AppoitmentsVM();
+                model.Services = _context.Services.Select(x => new SelectListItem
+                {
+                    Text = x.Name,
+                    Value = x.ServiceId.ToString(),
+                    Selected = (x.ServiceId == model.ServiceId)
+                }
+                ).ToList();
+                return View(model);
+            }
+
+            Appoitment ModelToDB = new Appoitment
+            {
+                ServiceId = appoitment.ServiceId,
+                //ClientId = _userManager.GetUserId(User),
+                Date = DateTime.Now,
+            };
+
+                _context.Add(ModelToDB);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
-            }
-            ViewData["ServiceId"] = new SelectList(_context.Services, "ServiceId", "ServiceId", appoitment.ServiceId);
-            return View(appoitment);
+            
+            
         }
 
         // GET: Appoitments/Edit/5
@@ -108,16 +134,26 @@ namespace ManicureAndPedicureSalon.Controllers
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
+                return View(appoitment);
+            }
+            
+            Appoitment ModelTooDB = new Appoitment
+            {
+                    ServiceId = appoitment.ServiceId,
+                    //ClientId = _userManager.GetUserId(User),
+                    Date = DateTime.Now
+            };
+            
                 try
                 {
-                    _context.Update(appoitment);
+                    _context.Update(ModelTooDB);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!AppoitmentExists(appoitment.Id))
+                    if (!AppoitmentExists(ModelTooDB.Id))
                     {
                         return NotFound();
                     }
@@ -127,9 +163,9 @@ namespace ManicureAndPedicureSalon.Controllers
                     }
                 }
                 return RedirectToAction(nameof(Index));
-            }
-            ViewData["ServiceId"] = new SelectList(_context.Services, "ServiceId", "ServiceId", appoitment.ServiceId);
-            return View(appoitment);
+            
+            
+          //  return View(appoitment);
         }
 
         // GET: Appoitments/Delete/5

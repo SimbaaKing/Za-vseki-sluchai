@@ -82,10 +82,6 @@ namespace ManicureAndPedicureSalon.Controllers
             ).ToList();
 
             return View(model);
-
-
-            //ViewData["ProductId"] = new SelectList(_context.Product, "Id", "Id");
-            //return View();
         }
 
         // POST: Orders/Create
@@ -118,9 +114,6 @@ namespace ManicureAndPedicureSalon.Controllers
                 _context.Add(modelToDB);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
-            
-            //ViewData["ProductId"] = new SelectList(_context.Product, "Id", "Id", order.ProductId);
-            //return View(order);
         }
 
         // GET: Orders/Edit/5
