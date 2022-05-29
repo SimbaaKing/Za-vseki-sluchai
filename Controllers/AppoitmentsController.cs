@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ManicureAndPedicureSalon.Data;
 using ManicureAndPedicureSalon.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ManicureAndPedicureSalon.Controllers
 {
@@ -47,6 +48,7 @@ namespace ManicureAndPedicureSalon.Controllers
         }
 
         // GET: Appoitments/Create
+        [Authorize(Roles = "User, Admin")]
         public IActionResult Create()
         {
             AppoitmentsVM model = new AppoitmentsVM();
@@ -58,8 +60,8 @@ namespace ManicureAndPedicureSalon.Controllers
                 Selected = (x.ServiceId == model.ServiceId)
             }
             ).ToList();
-            
-            return View(model);
+
+            return View();
         }
 
         // POST: Appoitments/Create
@@ -67,10 +69,12 @@ namespace ManicureAndPedicureSalon.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,ClientId,ServiceId,DateVisit,TimeVisit,Date")] AppoitmentsVM appoitment)
+        public async Task<IActionResult> Create([Bind("Id,ClientId,ServiceId,DateVisit,TimeVisit,Date")] Appoitment appoitment)
         {
-            if (!ModelState.IsValid)
-            {
+            if (ModelState.IsValid)
+            { 
+               
+
                 AppoitmentsVM model = new AppoitmentsVM();
                 model.Services = _context.Services.Select(x => new SelectListItem
                 {
@@ -81,25 +85,27 @@ namespace ManicureAndPedicureSalon.Controllers
                 ).ToList();
                 return View(model);
             }
-
+            
             Appoitment ModelToDB = new Appoitment
             {
                 ServiceId = appoitment.ServiceId,
                 //ClientId = _userManager.GetUserId(User),
                 Date = DateTime.Now,
-            };
-
+            }; 
                 _context.Add(ModelToDB);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
-            
-            
         }
 
         // GET: Appoitments/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
+            {
+                return NotFound();
+            }
+            var appoitment = await _context.Appoitments.FindAsync(id);
+            if (appoitment == null)
             {
                 return NotFound();
             }
@@ -111,13 +117,6 @@ namespace ManicureAndPedicureSalon.Controllers
                 Selected = (x.ServiceId == model.ServiceId)
             }
             ).ToList();
-
-            var appoitment = await _context.Appoitments.FindAsync(id);
-            if (appoitment == null)
-            {
-                return NotFound();
-            }
-            
             return View(model);
         }
 
@@ -138,15 +137,15 @@ namespace ManicureAndPedicureSalon.Controllers
             {
                 return View(appoitment);
             }
-            
+
             Appoitment ModelTooDB = new Appoitment
             {
-                    ServiceId = appoitment.ServiceId,
-                    //ClientId = _userManager.GetUserId(User),
-                    Date = DateTime.Now
+                ServiceId = appoitment.ServiceId,
+                //ClientId = _userManager.GetUserId(User),
+                Date = DateTime.Now
             };
-            
-                try
+
+            try
                 {
                     _context.Update(ModelTooDB);
                     await _context.SaveChangesAsync();

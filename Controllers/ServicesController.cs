@@ -48,10 +48,13 @@ namespace ManicureAndPedicureSalon.Controllers
         }
 
         // GET: Services/Create
-       // [Authorize(Roles = "User, Admin")]
+
+        [Authorize(Roles = "User, Admin")]
+
         public IActionResult Create()
         {
             ServicesVM model = new ServicesVM();
+
             model.Employers = _context.Employers.Select(x => new SelectListItem
             {
                 Value = x.EmployerId.ToString(),
@@ -83,6 +86,7 @@ namespace ManicureAndPedicureSalon.Controllers
             }
             
                 Service modelToDb = new Service();
+            {
                 modelToDb.ServiceId = service.ServiceId;
                 modelToDb.Name = service.Name;
                 modelToDb.Price = service.Price;
@@ -91,6 +95,7 @@ namespace ManicureAndPedicureSalon.Controllers
                 modelToDb.Category = service.Category;
                 modelToDb.Description = service.Description;
                 modelToDb.EmployerId = service.EmployerId;
+            }
 
                 _context.Services.Add(modelToDb);
                 await _context.SaveChangesAsync();
@@ -153,24 +158,24 @@ namespace ManicureAndPedicureSalon.Controllers
                 modelToDb.Category = service.Category;
                 modelToDb.Description = service.Description;
                 modelToDb.EmployerId = service.EmployerId;
-            }
-                try
-                {
-                    _context.Update(modelToDb);
-                    await _context.SaveChangesAsync();
+            };
+            try
+            {
+                _context.Update(modelToDb);
+                await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ServiceExists(modelToDb.ServiceId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
+                  if (!ServiceExists(modelToDb.ServiceId))
+                   {
+                     return NotFound();
+                   }
+                   else
+                   {
+                     throw;
+                   }
+            }
+            return RedirectToAction(nameof(Index));
             
         }
 

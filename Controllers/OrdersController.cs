@@ -58,7 +58,9 @@ namespace ManicureAndPedicureSalon.Controllers
 
             var order = await _context.Orders
                 .Include(o => o.Product)
+                .Include(u => u.Client)
                 .FirstOrDefaultAsync(m => m.Id == id);
+
             if (order == null)
             {
                 return NotFound();
@@ -122,6 +124,11 @@ namespace ManicureAndPedicureSalon.Controllers
             if (id == null)
             {
                 return NotFound();
+            } 
+            var order = await _context.Orders.FindAsync(id);
+            if (order == null)
+            {
+                return NotFound();
             }
             OrdersVM model = new OrdersVM();
             model.Products = _context.Products.Select(x => new SelectListItem
@@ -131,12 +138,6 @@ namespace ManicureAndPedicureSalon.Controllers
                 Selected = (x.Id == model.ProductId)
             }
             ).ToList();
-
-            var order = await _context.Orders.FindAsync(id);
-            if (order == null)
-            {
-                return NotFound();
-            }
            
             return View(model);
         }
@@ -166,8 +167,6 @@ namespace ManicureAndPedicureSalon.Controllers
                 Quantity = order.Quantity,
                 OrderedOn = DateTime.Now
             };
-            
-         
             try
             {
                 _context.Update(modelTooDB);//(order);
@@ -184,11 +183,8 @@ namespace ManicureAndPedicureSalon.Controllers
                     throw;
                 }
             }
-             return RedirectToAction(nameof(Index));
-           
-            
-            
-            
+            return RedirectToAction(nameof(Index));
+  
         }
 
         // GET: Orders/Delete/5
