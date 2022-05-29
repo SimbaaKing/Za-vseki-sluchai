@@ -1,4 +1,5 @@
-﻿@model ManicureAndPedicureSalon.Data.Appoitment
+﻿@using ManicureAndPedicureSalon.Data
+@model ManicureAndPedicureSalon.Models.AppoitmentsVM
 
 @{
     ViewData["Title"] = "Edit";
@@ -18,11 +19,11 @@
                 <input asp-for="ClientId" class="form-control" />
                 <span asp-validation-for="ClientId" class="text-danger"></span>
             </div>*@
-            @*<div class="form-group">
+            <div class="form-group">
                 <label asp-for="ServiceId" class="control-label"></label>
-                <select asp-for="ServiceId" class="form-control" asp-items="ViewBag.ServiceId"></select>
+                <select asp-for="ServiceId" class="form-control" asp-items="@Model.Services"></select>
                 <span asp-validation-for="ServiceId" class="text-danger"></span>
-            </div>*@
+            </div>
             <div class="form-group">
                 <label asp-for="DateVisit" class="control-label" style="color:black"></label>
                 <input asp-for="DateVisit" class="form-control" />

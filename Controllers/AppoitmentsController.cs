@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ManicureAndPedicureSalon.Data;
+using ManicureAndPedicureSalon.Models;
 
 namespace ManicureAndPedicureSalon.Controllers
 {
@@ -76,14 +77,22 @@ namespace ManicureAndPedicureSalon.Controllers
             {
                 return NotFound();
             }
+            AppoitmentsVM model = new AppoitmentsVM();
+            model.Services = _context.Services.Select(x => new SelectListItem
+            {
+                Text = x.Name,
+                Value = x.ServiceId.ToString(),
+                Selected = (x.ServiceId == model.ServiceId)
+            }
+            ).ToList();
 
             var appoitment = await _context.Appoitments.FindAsync(id);
             if (appoitment == null)
             {
                 return NotFound();
             }
-            ViewData["ServiceId"] = new SelectList(_context.Services, "ServiceId", "ServiceId", appoitment.ServiceId);
-            return View(appoitment);
+            
+            return View(model);
         }
 
         // POST: Appoitments/Edit/5
@@ -91,8 +100,9 @@ namespace ManicureAndPedicureSalon.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,ClientId,ServiceId,DateVisit,TimeVisit,Date")] Appoitment appoitment)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,ClientId,ServiceId,DateVisit,TimeVisit,Date")] AppoitmentsVM appoitment)
         {
+            appoitment.Date = DateTime.Now;
             if (id != appoitment.Id)
             {
                 return NotFound();
