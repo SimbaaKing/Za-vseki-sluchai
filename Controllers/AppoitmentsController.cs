@@ -132,7 +132,7 @@ namespace ManicureAndPedicureSalon.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,ClientId,ServiceId,DateVisit,TimeVisit,Date")] AppoitmentsVM appoitment)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,ClientId,ServiceId,DateVisit,TimeVisit,Date")] Appoitment appoitment)
         {
             appoitment.Date = DateTime.Now;
             if (id != appoitment.Id)
@@ -145,22 +145,22 @@ namespace ManicureAndPedicureSalon.Controllers
                 return View(appoitment);
             }
 
-            Appoitment ModelFromDB = new Appoitment
-            {
-                ServiceId = appoitment.ServiceId,
-               // ClientId  = _userManager.GetUserId(User),
-                Date = DateTime.Now,
-                DateVisit = DateTime.Now
-            };
+            //Appoitment ModelFromDB = new Appoitment
+            //{
+            //    ServiceId = appoitment.ServiceId,
+            //   // ClientId  = _userManager.GetUserId(User),
+            //    Date = DateTime.Now,
+            //    DateVisit = DateTime.Now
+            //};
 
             try
                 {
-                    _context.Update(ModelFromDB);
+                    _context.Update(appoitment);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!AppoitmentExists(ModelFromDB.Id))
+                    if (!AppoitmentExists(appoitment.Id))
                     {
                         return NotFound();
                     }

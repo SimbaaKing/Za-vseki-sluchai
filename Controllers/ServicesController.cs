@@ -135,7 +135,7 @@ namespace ManicureAndPedicureSalon.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ServiceId,Name,Category,Description,EmployerId,Images,Price,DateRegister")] ServicesVM service)
+        public async Task<IActionResult> Edit(int id, [Bind("ServiceId,Name,Category,Description,EmployerId,Images,Price,DateRegister")] Service service)
         {
             service.DateRegister = DateTime.Now;
             //Service modelToDb = await _context.Services.FindAsync(Service);
@@ -148,25 +148,25 @@ namespace ManicureAndPedicureSalon.Controllers
             {
                 return View(service);
             }
-            Service modelFromDb = new ();
-            {
-                //modelToDb.ServiceId = service.ServiceId;
-                modelFromDb.Name = service.Name;
-                modelFromDb.Price = service.Price;
-                modelFromDb.Images = service.Images;
-                modelFromDb.DateRegister = service.DateRegister;
-                modelFromDb.Category = service.Category;
-                modelFromDb.Description = service.Description;
-                modelFromDb.EmployerId = service.EmployerId;
-            };
+            //Service modelFromDb = new ();
+            //{
+            //    //modelToDb.ServiceId = service.ServiceId;
+            //    modelFromDb.Name = service.Name;
+            //    modelFromDb.Price = service.Price;
+            //    modelFromDb.Images = service.Images;
+            //    modelFromDb.DateRegister = service.DateRegister;
+            //    modelFromDb.Category = service.Category;
+            //    modelFromDb.Description = service.Description;
+            //    modelFromDb.EmployerId = service.EmployerId;
+            //};
             try
             {
-                _context.Update(modelFromDb);
+                _context.Update(service);
                 await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                  if (!ServiceExists(modelFromDb.ServiceId))
+                  if (!ServiceExists(service.ServiceId))
                    {
                      return NotFound();
                    }

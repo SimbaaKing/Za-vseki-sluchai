@@ -3,57 +3,65 @@
 @{
     ViewData["Title"] = "Index";
 }
+<style >
+    
+</style>
 
 <h1 style="text-align:center; color:black; text-decoration:underline">Запазване на час</h1>
 
 <p>
     <a style="color:black" asp-action="Create">Create New</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            @*<th>
-                @Html.DisplayNameFor(model => model.ClientId)
-            </th>*@
-            <th>
-                @Html.DisplayNameFor(model => model.Service)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DateVisit)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TimeVisit)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Date)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.ClientId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Service.ServiceId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DateVisit)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TimeVisit)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Date)
-            </td>
-            <td>
-                <a asp-action="Edit" style="color:midnightblue" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" style="color:midnightblue" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" style="color:midnightblue" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<body>
+    <table class="table" id="table-style" style="background: rgba(255,255,255,0.6);">
+        <thead>
+            <tr>
+                @*<th>
+                    @Html.DisplayNameFor(model => model.ClientId)
+                </th>*@
+                <th>
+                    @Html.DisplayNameFor(model => model.Service)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DateVisit)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TimeVisit)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Date)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    @*<td>
+                        @Html.DisplayFor(modelItem => item.ClientId)
+                    </td>*@
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Service.ServiceId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DateVisit)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TimeVisit)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Date)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" style="color:midnightblue" asp-route-id="@item.Id">Edit</a> |
+                        <a asp-action="Details" style="color:midnightblue" asp-route-id="@item.Id">Details</a> |
+                        <a asp-action="Delete" style="color:midnightblue" asp-route-id="@item.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</body>
+
