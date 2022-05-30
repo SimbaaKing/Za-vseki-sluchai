@@ -71,7 +71,7 @@ namespace ManicureAndPedicureSalon.Controllers
         public async Task<IActionResult> Create([Bind("Id,ClientId,ServiceId,DateVisit,TimeVisit,Date")] AppoitmentsVM appoitment)
         {
             appoitment.Date = DateTime.Now;
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             { 
                 AppoitmentsVM model = new AppoitmentsVM();
                 model.Services = _context.Services.Select(x => new SelectListItem
@@ -163,9 +163,6 @@ namespace ManicureAndPedicureSalon.Controllers
                     }
                 }
                 return RedirectToAction(nameof(Index));
-            
-            
-          //  return View(appoitment);
         }
 
         // GET: Appoitments/Delete/5
