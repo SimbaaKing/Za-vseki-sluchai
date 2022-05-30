@@ -8,22 +8,28 @@ using Microsoft.EntityFrameworkCore;
 using ManicureAndPedicureSalon.Data;
 using ManicureAndPedicureSalon.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace ManicureAndPedicureSalon.Controllers
 {
     public class AppoitmentsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<Client> _userManager;
 
-        public AppoitmentsController(ApplicationDbContext context)
+        public AppoitmentsController(ApplicationDbContext context,
+                                     UserManager<Client> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Appoitments
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Appoitments.Include(a => a.Service);
+            var applicationDbContext = _context.Appoitments
+                .Include(a => a.Service)
+                .Include(o => o.Client);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -84,13 +90,13 @@ namespace ManicureAndPedicureSalon.Controllers
                 return View(model);
             }
 
-            Appoitment ModelToDB = new Appoitment();
+            Appoitment ModelToDB = new Appoitment
             {
-                ModelToDB.ServiceId = appoitment.ServiceId;
+                ServiceId = appoitment.ServiceId,
                 //ClientId = _userManager.GetUserId(User),
-                ModelToDB.Date = DateTime.Now;
-                ModelToDB.DateVisit = DateTime.Now;
-                ModelToDB.TimeVisit = DateTime.UtcNow;
+                Date = DateTime.Now,
+                DateVisit = DateTime.Now,
+                TimeVisit = DateTime.Now
             }; 
                 _context.Add(ModelToDB);
                 await _context.SaveChangesAsync();
@@ -139,11 +145,12 @@ namespace ManicureAndPedicureSalon.Controllers
                 return View(appoitment);
             }
 
-            AppoitmentsVM ModelFromDB = new ()
+            Appoitment ModelFromDB = new Appoitment
             {
                 ServiceId = appoitment.ServiceId,
-                //ClientId = _userManager.GetUserId(User),
-                Date = DateTime.Now
+               // ClientId  = _userManager.GetUserId(User),
+                Date = DateTime.Now,
+                DateVisit = DateTime.Now
             };
 
             try

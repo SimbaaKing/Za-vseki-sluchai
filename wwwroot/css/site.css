@@ -19,8 +19,8 @@ a {
 }
 
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-  color: #fff;
-  background-color: #1b6ec2;
+  color: black;
+  background-color: darkred;
   border-color: black;
 }
 
@@ -32,7 +32,7 @@ html {
 @media (min-width: 768px) {
   html {
     font-size: 13px;
-    background-color:peachpuff;
+   
   }
 }
 
@@ -57,7 +57,7 @@ button.accept-policy {
 html {
   position: relative;
   min-height: 100%;
-  background-color:peachpuff;
+  
 }
 
 body {
@@ -70,7 +70,7 @@ body {
     font-style: italic;
     background-color: peachpuff;
     color: black;
-    background-image: url(https://i.pinimg.com/originals/54/36/54/543654bd27959743a09b152ad2f9c037.jpg)
+    background-image: url(https://kartinkin.net/uploads/posts/2021-07/thumbs/1625667964_46-kartinkin-com-p-mramor-oboi-krasivie-47.jpg);
 }
 h
 .footer {
