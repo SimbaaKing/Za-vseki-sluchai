@@ -148,7 +148,7 @@ namespace ManicureAndPedicureSalon.Controllers
             //Appoitment ModelFromDB = new Appoitment
             //{
             //    ServiceId = appoitment.ServiceId,
-            //   // ClientId  = _userManager.GetUserId(User),
+            //    // ClientId  = _userManager.GetUserId(User),
             //    Date = DateTime.Now,
             //    DateVisit = DateTime.Now
             //};

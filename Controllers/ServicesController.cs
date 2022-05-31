@@ -70,7 +70,7 @@ namespace ManicureAndPedicureSalon.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ServiceId,Name,Category,Description,EmployerId,Images,Price,DateRegister")] ServicesVM service)
+        public async Task<IActionResult> Create([Bind("ServiceId,Name,Category,Description,EmployerId,Images,Price,DateRegister")] Service service)
         {
             service.DateRegister = DateTime.Now;
             if (!ModelState.IsValid)
@@ -84,8 +84,8 @@ namespace ManicureAndPedicureSalon.Controllers
                 }).ToList();
                 return View(model);
             }
-            
-                Service modelToDb = new Service();
+
+            Service modelToDb = new Service();
             {
                 modelToDb.ServiceId = service.ServiceId;
                 modelToDb.Name = service.Name;
@@ -97,7 +97,7 @@ namespace ManicureAndPedicureSalon.Controllers
                 modelToDb.EmployerId = service.EmployerId;
             }
 
-                _context.Services.Add(modelToDb);
+            _context.Services.Add(service);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
         }

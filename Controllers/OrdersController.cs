@@ -169,7 +169,7 @@ namespace ManicureAndPedicureSalon.Controllers
             };
             try
             {
-                _context.Update(modelTooDB);//(order);
+                _context.Update(modelTooDB);
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
